@@ -25,3 +25,18 @@ export async function deletePost(id) {
     };
   }
 }
+
+export async function editPost(id, body) {
+  try {
+    const response = await api.patch(`/posts/${id}`, body);
+    console.log("editPost", id, response);
+    if (response?.status == 200) {
+      return { success: true, data: response?.data };
+    }
+  } catch (err) {
+    return {
+      error: true,
+      message: err?.message || `Could not edit post id:${id}`,
+    };
+  }
+}
