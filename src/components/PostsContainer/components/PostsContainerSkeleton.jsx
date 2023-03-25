@@ -21,6 +21,7 @@ export default function PostsContainerSkeleton() {
       {new Array(6).fill("_").map((_, i) => {
         return (
           <Skeleton
+            key={i}
             sx={{
               maxWidth: 345,
               m: 1,
