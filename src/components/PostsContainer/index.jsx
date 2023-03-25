@@ -23,7 +23,7 @@ export default function PostsContainer({ posts }) {
       <CreatePostCard />
 
       {posts?.map((post, i) => {
-        return <PostCard key={post?.id + i} post={post} />;
+        return <PostCard key={String(post?.id) + i} post={post} />;
       })}
     </Box>
   ) : (

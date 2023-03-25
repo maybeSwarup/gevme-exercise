@@ -47,6 +47,7 @@ export const AppContextProvider = ({ children }) => {
     openSnackbar,
     posts,
     fetchPosts,
+    setPosts,
   };
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;

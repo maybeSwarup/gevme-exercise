@@ -22,7 +22,7 @@ export default function CreatePostCard({}) {
     },
   };
 
-  const { openSnackbar } = useAppContext();
+  const { openSnackbar, setPosts } = useAppContext();
 
   const [isCreateMode, setIsCreateMode] = useState(false);
   const [formData, setFormData] = useState(initialState.formData);
@@ -41,6 +41,14 @@ export default function CreatePostCard({}) {
     const response = await createPost(formData);
 
     if (response?.success) {
+      console.log(response?.data);
+      setPosts((prev) => {
+        const newState = [...prev];
+        newState.unshift(response?.data);
+        return newState;
+      });
+
+      setFormData(initialState.formData);
       setIsCreateMode(false);
       openSnackbar("success", "Post created successfully");
     } else {
