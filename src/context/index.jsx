@@ -21,8 +21,12 @@ export const AppContextProvider = ({ children }) => {
 
     if (response?.success) {
       if (Array.isArray(response.data)) {
-        setPosts(response?.data);
-        openSnackbar("success", "Posts fetched successfully");
+        if (response?.data?.length > 0) {
+          setPosts(response?.data);
+          openSnackbar("success", "Posts fetched successfully");
+        } else {
+          openSnackbar("info", "Post not found!");
+        }
       } else {
         openSnackbar("error", "Response data is not correct");
         console.log("response data is not an array");
