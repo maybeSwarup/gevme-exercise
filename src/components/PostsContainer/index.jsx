@@ -2,6 +2,7 @@ import React from "react";
 import ZeroScreen from "./components/ZeroScreen";
 import PostCard from "./components/PostCard";
 import { Box, Stack } from "@mui/material";
+import CreatePostCard from "./components/CreatePostCard";
 
 export default function PostsContainer({ posts }) {
   return posts?.length > 0 ? (
@@ -19,6 +20,8 @@ export default function PostsContainer({ posts }) {
         width: "fit-content",
       }}
     >
+      <CreatePostCard />
+
       {posts?.map((post, i) => {
         return <PostCard key={post?.id + i} post={post} />;
       })}

@@ -1,5 +1,6 @@
-import React, { useContext, useState, createContext } from "react";
+import React, { useContext, useState, createContext, useEffect } from "react";
 import { defaultValues } from "../utils";
+import { getPosts } from "../api/posts";
 
 const AppContext = createContext();
 
@@ -13,6 +14,23 @@ export const initialState = {
 
 export const AppContextProvider = ({ children }) => {
   const [snackbar, setSnackbar] = useState(initialState.snackbar);
+  const [posts, setPosts] = useState([]);
+
+  async function fetchPosts() {
+    const response = await getPosts();
+
+    if (response?.success) {
+      if (Array.isArray(response.data)) {
+        setPosts(response?.data);
+        openSnackbar("success", "Posts fetched successfully");
+      } else {
+        openSnackbar("error", "Response data is not correct");
+        console.log("response data is not an array");
+      }
+    } else {
+      openSnackbar("error", response?.message || "Error Fetching posts data");
+    }
+  }
 
   function openSnackbar(severity, message) {
     // console.log("openSnackbar", snackbarProps);
@@ -27,6 +45,8 @@ export const AppContextProvider = ({ children }) => {
     snackbar,
     setSnackbar,
     openSnackbar,
+    posts,
+    fetchPosts,
   };
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;

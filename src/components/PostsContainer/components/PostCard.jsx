@@ -12,7 +12,7 @@ import SaveIcon from "@mui/icons-material/Save";
 import CancelIcon from "@mui/icons-material/Cancel";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { deletePost, editPost } from "../../../api/posts";
-import useAppContext, { initialState } from "../../../context";
+import useAppContext from "../../../context";
 import Spinner from "../../Spinner";
 
 export default function PostCard({ post }) {
@@ -70,7 +70,14 @@ export default function PostCard({ post }) {
 
   return (
     <Card
-      sx={{ maxWidth: 345, height: 280, m: 1, p: 1, background: "cornsilk" }}
+      sx={{
+        maxWidth: 345,
+        width: "100%",
+        height: 280,
+        m: 1,
+        p: 1,
+        background: "cornsilk",
+      }}
     >
       <CardContent>
         {isEditMode ? (

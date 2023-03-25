@@ -10,26 +10,13 @@ import PostsContainer from "./components/PostsContainer";
 import PostsContainerSkeleton from "./components/PostsContainer/components/PostsContainerSkeleton";
 
 function App() {
-  const { openSnackbar } = useAppContext();
+  const { fetchPosts, posts } = useAppContext();
 
-  const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState();
 
   async function onComponentLoad() {
     setLoading(true);
-    const response = await getPosts();
-
-    if (response?.success) {
-      if (Array.isArray(response.data)) {
-        setPosts(response?.data);
-        openSnackbar("success", "Posts fetched successfully");
-      } else {
-        openSnackbar("error", "Response data is not correct");
-        console.log("response data is not an array");
-      }
-    } else {
-      openSnackbar("error", response?.message || "Error Fetching posts data");
-    }
+    await fetchPosts();
     setLoading(false);
   }
 
