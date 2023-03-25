@@ -6,13 +6,17 @@ import { Typography } from "@mui/material";
 import { getPosts } from "./api/posts";
 import useAppContext from "./context";
 import AppSnackbar from "./components/AppSnackbar";
+import PostsContainer from "./components/PostsContainer";
+import PostsContainerSkeleton from "./components/PostsContainer/components/PostsContainerSkeleton";
 
 function App() {
   const { openSnackbar } = useAppContext();
 
   const [posts, setPosts] = useState([]);
+  const [loading, setLoading] = useState();
 
   async function onComponentLoad() {
+    setLoading(true);
     const response = await getPosts();
 
     if (response?.success) {
@@ -26,6 +30,7 @@ function App() {
     } else {
       openSnackbar("error", response?.message || "Error Fetching posts data");
     }
+    setLoading(false);
   }
 
   useEffect(() => {
@@ -35,6 +40,7 @@ function App() {
   return (
     <div className="App">
       <Typography variant="h3">Posts</Typography>
+      {loading ? <PostsContainerSkeleton /> : <PostsContainer posts={posts} />}
       <AppSnackbar />
     </div>
   );

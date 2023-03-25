@@ -1,5 +1,5 @@
 import { Alert, Snackbar } from "@mui/material";
-import useAppContext from "../context";
+import useAppContext from "../../context";
 
 export default function AppSnackbar() {
   //   console.log("AppSnackbar");
