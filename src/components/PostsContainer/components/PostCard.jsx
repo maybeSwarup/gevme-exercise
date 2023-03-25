@@ -23,7 +23,7 @@ export default function PostCard({ post }) {
     },
   };
 
-  const { openSnackbar } = useAppContext();
+  const { openSnackbar, setPosts } = useAppContext();
 
   const [isEditMode, setIsEditMode] = useState(false);
   const [saveLoading, setSaveLoading] = useState(false);
@@ -57,6 +57,20 @@ export default function PostCard({ post }) {
     const response = await deletePost(post?.id);
 
     if (response?.success) {
+      setPosts((prev) => {
+        const newState = [...prev];
+        const postIndex = newState?.findIndex(
+          (thisPost) => thisPost?.id == post?.id
+        );
+        if (postIndex > -1) {
+          newState.splice(postIndex, 1);
+          return newState;
+        } else {
+          console.log(
+            `Deleted post id:${post?.id}  not found in fetched posts`
+          );
+        }
+      });
       openSnackbar("success", "Post deleted successfully");
     } else {
       openSnackbar("error", response?.message || "Error deleting post");
